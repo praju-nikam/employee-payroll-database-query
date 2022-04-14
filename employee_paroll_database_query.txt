@@ -1,0 +1,135 @@
+==================================================== UC 1 Create Database  & Show ====================================
+
+mysql> create database payroll_service;
+Query OK, 1 row affected (0.14 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| payroll_service    |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.10 sec)
+
+=========================================== UC 2 Create Table ====================================================
+mysql> use payroll_service;
+Database changed
+mysql> create table employee(
+    -> id INT unsigned NOT NULL AUTO_INCREMENT,
+    -> name VARCHAR(150) NOT NULL,
+    -> salary Double NOT NULL,
+    -> start DATE NOT NULL,
+    -> PRIMARY KEY (id));
+Query OK, 0 rows affected (3.66 sec)
+
+======================================= UC 3 INSERT Data into Table ==============================================
+
+mysql> INSERT INTO employee ( name , salary, start) VALUES
+    ->  ('BILL', 100000.00, '2021-01-29');
+Query OK, 1 row affected (0.48 sec)
+
+mysql> INSERT INTO employee ( name , salary, start) VALUES
+    ->  ('Rohit', 200000.00, '2020-05-5');
+Query OK, 1 row affected (0.19 sec)
+
+mysql> INSERT INTO employee ( name , salary, start) VALUES
+    -> ('Vaibhav', 300000.00,'2019-03-14');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> INSERT INTO employee ( name , salary, start) VALUES
+    -> ('Swapnali', 500000.00,'2020-04-15');
+Query OK, 1 row affected (0.10 sec)
+======================================= UC 4 Display the Table =====================================================
+
+mysql> select * from employee;
++----+----------+--------+------------+
+| id | name     | salary | start      |
++----+----------+--------+------------+
+|  1 | BILL     | 100000 | 2021-01-29 |
+|  2 | Rohit    | 200000 | 2020-05-05 |
+|  3 | Vaibhav  | 300000 | 2019-03-14 |
+|  4 | Swapnali | 500000 | 2020-04-15 |
++----+----------+--------+------------+
+4 rows in set (0.10 sec)
+
+====================================== UC 5 Retrive salary data for a perticular employee ============================
+
+mysql> select salary from employee where name = 'Vaibhav';
++--------+
+| salary |
++--------+
+| 300000 |
++--------+
+1 row in set (0.00 sec)
+
+=============================================== UC 6 Update Table ===================================================
+
+mysql> ALTER table employee ADD gender VARCHAR(6) NOT NULL AFTER start;
+Query OK, 0 rows affected (2.77 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update employee set gender = 'M' where name = 'BILL' or name = 'Rohit' or name = 'Vaibhav';
+Query OK, 3 rows affected (0.19 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> update employee set gender = 'F' where name = 'Swapnali';
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+============================================= UC 7  ===================================================
+
+
+mysql> select SUM(salary) from employee where gender = 'F' GROUP BY GENDER;
++-------------+
+| SUM(salary) |
++-------------+
+|      500000 |
++-------------+
+1 row in set (0.03 sec)
+
+
+mysql> select SUM(salary) from employee where gender = 'M' GROUP BY GENDER;
++-------------+
+| SUM(salary) |
++-------------+
+|      600000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select AVG(salary) from employee where gender = 'M' GROUP BY GENDER;
++-------------+
+| AVG(salary) |
++-------------+
+|      200000 |
++-------------+
+1 row in set (0.02 sec)
+
+mysql> select MIN(salary) from employee where gender = 'M' GROUP BY GENDER;
++-------------+
+| MIN(salary) |
++-------------+
+|      100000 |
++-------------+
+1 row in set (0.04 sec)
+
+mysql> select MAX(salary) from employee where gender = 'M' GROUP BY GENDER;
++-------------+
+| MAX(salary) |
++-------------+
+|      300000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select COUNT(salary) from employee where gender = 'M' GROUP BY GENDER;
++---------------+
+| COUNT(salary) |
++---------------+
+|             3 |
++---------------+
+1 row in set (0.00 sec)
